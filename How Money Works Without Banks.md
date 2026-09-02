@@ -129,7 +129,7 @@ SPV makes Bitcoin easier to use on devices that cannot store and verify the enti
 
 This distinction matters when looking at how Bitcoin has evolved.
 
-One of the problems that became important for second-layer protocols was **transaction malleability**. Before SegWit, parts of a transaction could be changed without changing what the transaction actually spent. The transaction ID could therefore change even though the payment itself remained the same.
+One of the problems that became important for second-layer protocols was **transaction malleability**. A transaction's ID is calculated by hashing the transaction's data, and before SegWit that data included the signatures. Because a signature could be re-encoded in a different but still valid way without changing what the transaction actually spent, the transaction ID could change even though the payment itself remained the same.
 
 That created problems for systems that needed to refer to transactions by their IDs.
 
