@@ -113,21 +113,21 @@ When you spend Bitcoin, your wallet uses a private key to create a digital signa
 
 ### 5. SPV Allows Lightweight Verification
 
-Not every Bitcoin user needs to store the entire blockchain. **SPV**, or Simplified Payment Verification, allows a lightweight client to verify certain payment information without downloading the complete blockchain.
+Not every Bitcoin user needs to store the entire blockchain. **SPV**, or Simplified Payment Verification, allows a lightweight client to check that a transaction happened without downloading and validating the complete blockchain itself.
+
+An SPV client downloads block headers, follows the chain with the greatest accumulated proof-of-work, and requests a Merkle proof that a transaction is included in a block. It does not independently validate the full consensus ruleset the way a full node does. In other words, it is a lightweight wallet that relies on information provided by the network rather than independently validating every transaction and block.
 
 **Why does this matter?**
 
 * Lightweight wallets can run on devices with limited storage.
-* Users can verify relevant payment information without maintaining a full node.
-* Bitcoin can be used without running a full copy of the blockchain.
+* Users can check relevant payment information without maintaining a full node.
+* Bitcoin can be used without running a full copy of the blockchain, at the cost of trusting the network's chain rather than verifying it independently.
 
 Reference: [Bitcoin Whitepaper, Section 8](https://bitcoin.org/bitcoin.pdf)
 
 ### Why Verification Matters
 
-SPV makes Bitcoin easier to use on devices that cannot store and verify the entire blockchain, but it comes with a weaker security model than running a full node. A lightweight wallet relies on information provided by the network rather than independently validating every transaction and block.
-
-This distinction matters when looking at how Bitcoin has evolved.
+That trust trade-off, relying on the network instead of validating everything yourself, matters when looking at how Bitcoin has evolved.
 
 One of the problems that became important for second-layer protocols was **transaction malleability**. A transaction's ID is calculated by hashing the transaction's data, and before SegWit that data included the signatures. Because a signature could be re-encoded in a different but still valid way without changing what the transaction actually spent, the transaction ID could change even though the payment itself remained the same.
 
