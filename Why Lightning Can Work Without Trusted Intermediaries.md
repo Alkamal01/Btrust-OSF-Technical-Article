@@ -111,7 +111,29 @@ The part I still want to understand better is how these mechanisms work in curre
 
 That is where I plan to continue from here.
 
-## References
+## References & Further Reading
 
+**Official Lightning Documentation:**
 - [Lightning Network Whitepaper (Poon & Dryja)](https://lightning.network/lightning-network-paper.pdf)
-- [BOLT #4: Onion Routing Protocol](https://github.com/lightning/bolts/blob/master/04-onion-routing.md)
+- [BOLT Specifications](https://github.com/lightning/bolts) — the official technical specs, including [BOLT #4: Onion Routing Protocol](https://github.com/lightning/bolts/blob/master/04-onion-routing.md)
+- [Lightning Network Explained](https://www.bitcoin.com/get-started/blockchain-tech/layer-2s-scaling/what-is-lightning-network/) — Bitcoin.com overview
+
+**Deep Dives:**
+- [History of the Lightning Network (Christian Decker)](https://btctranscripts.com/chaincode-labs/chaincode-residency/2018-10-22-christian-decker-history-of-lightning/) — how Lightning was invented
+- [LN Things Part 4: HTLC Overview (Elle Mouton)](https://ellemouton.com/posts/htlc/) — technical explanation of the hash-and-timelock mechanism
+- [Revocable Transactions with LN-Penalty](https://www.derpturkey.com/revocable-transactions-with-ln-penalty/) — how revocation keys work
+
+**To Use Lightning (Beginner-Friendly Wallets):**
+- [Strike](https://strike.me/) — send Bitcoin instantly
+- [Breez](https://breez.technology/) — mobile Lightning wallet
+- [Blue Wallet](https://bluewallet.io/) — Bitcoin + Lightning mobile wallet
+
+**To Run a Node:**
+- [LND (Lightning Network Daemon)](https://github.com/lightningnetwork/lnd) — most popular implementation
+- [Core Lightning](https://github.com/ElementsProject/lightning) — alternative implementation
+- [Eclair](https://github.com/ACINQ/eclair) — Kotlin implementation
+
+**For More Technical Understanding:**
+- [Explaining Bitcoin's Payment Channels (Lightspark)](https://www.lightspark.com/glossary/channel)
+- [Timelocks (Lightning Engineering Builder's Guide)](https://docs.lightning.engineering/the-lightning-network/multihop-payments/timelocks)
+- [Visualizing HTLCs and the Lightning Network's Dirty Little Secret (Peter R. Rizun)](https://medium.com/@peter_r/visualizing-htlcs-and-the-lightning-networks-dirty-little-secret-cb9b5773a0)
