@@ -61,8 +61,6 @@ Timelocks are also important here. Certain outputs from a commitment transaction
 
 This was where I started to understand why monitoring matters in Lightning.
 
-Reference: [Lightning Network Whitepaper (Poon & Dryja)](https://lightning.network/lightning-network-paper.pdf)
-
 ## Going Offline
 
 A Lightning user does not have to watch the blockchain every second, but they cannot ignore their channels indefinitely.
@@ -89,8 +87,6 @@ Bob therefore does not need to receive Alice's money and then promise to forward
 
 Bob also only sees his own hop. He knows the previous node and the next node in the path, but not where the payment originally started or where it ends up. This is done through onion routing, where each node in the path can only unwrap the layer meant for it. So the trust problem is not just about the money, it is also about not having to give any single node the full picture of who is paying whom.
 
-Reference: [BOLT #4: Onion Routing Protocol](https://github.com/lightning/bolts/blob/master/04-onion-routing.md)
-
 ## There Are Still Tradeoffs
 
 Studying Lightning also made it clear to me that moving payments off-chain introduces other problems.
@@ -114,3 +110,8 @@ Commitment transactions give channel participants an on-chain settlement option.
 The part I still want to understand better is how these mechanisms work in current Lightning implementations, especially channel backups, watchtowers, routing, and liquidity management.
 
 That is where I plan to continue from here.
+
+## References
+
+- [Lightning Network Whitepaper (Poon & Dryja)](https://lightning.network/lightning-network-paper.pdf)
+- [BOLT #4: Onion Routing Protocol](https://github.com/lightning/bolts/blob/master/04-onion-routing.md)
