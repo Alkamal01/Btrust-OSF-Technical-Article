@@ -2,6 +2,8 @@
 
 One of the things I wanted to understand while studying the Lightning Network was how payments can move through people you do not know without giving those people control over your money.
 
+Lightning still relies on other people's nodes to route a payment when you do not have a direct channel with the person you are paying. What changes is not whether intermediaries exist, but whether you have to trust them with custody of your funds while they do it.
+
 With Bitcoin, transactions are published to the blockchain and independently validated by nodes. Lightning works differently. Most channel activity happens off-chain, so the protocol needs a way for participants to update balances and settle disputes without relying on a bank or another trusted intermediary.
 
 *AI Usage Disclosure: I wrote and researched this article myself. I used AI only to check grammar and language, not for research, structure, or content.*
@@ -79,19 +81,23 @@ Suppose Alice has a channel with Bob, and Bob has a channel with Charlie. Alice 
 
 HTLCs help make this possible.
 
-Charlie provides a payment hash. The corresponding preimage is needed to complete the payment. The payment can then travel through the route under conditions that allow each participant to claim the incoming payment when the outgoing payment succeeds.
+Charlie provides a payment hash. The corresponding preimage is needed to complete the payment.
 
-Timelocks provide a way for participants to recover their funds if the payment does not complete.
+The detail that made this click for me is that every hop in the route uses the same hash. Charlie generates a secret, the preimage, and gives Alice its hash as part of an invoice. Alice sends an HTLC to Bob locked to that hash, and Bob sends his own HTLC to Charlie locked to the same hash. Charlie is the only one who knows the preimage, so he is the only one who can claim the payment Bob sent him, and claiming it means revealing the preimage to do so.
+
+Once Bob sees that preimage, he can use it to claim the HTLC Alice sent him. But if Bob never forwards the payment to Charlie, he never learns the preimage, and he has no way to claim Alice's HTLC either. That is what stops Bob from simply keeping Alice's payment without completing his part of the route.
+
+Timelocks provide a way for participants to recover their funds if the payment does not complete. If Bob never forwards it, or Charlie never claims it, the HTLC expires and Alice gets her funds back.
 
 Bob therefore does not need to receive Alice's money and then promise to forward it to Charlie. The payment conditions are enforced by the transactions and scripts used by the protocol.
 
-Bob also only sees his own hop. He knows the previous node and the next node in the path, but not where the payment originally started or where it ends up. This is done through onion routing, where each node in the path can only unwrap the layer meant for it. So the trust problem is not just about the money, it is also about not having to give any single node the full picture of who is paying whom.
+Bob also does not learn the complete route from the onion packet Alice constructs; he only receives the information needed to forward his part of the payment, meaning which node to send it to next and under what conditions. He does not learn where the payment originally started or where it ultimately ends up, since each node in the path can only unwrap the layer meant for it. So the trust problem is not just about the money, it is also about not having to give any single node the full picture of who is paying whom.
 
 ## There Are Still Tradeoffs
 
 Studying Lightning also made it clear to me that moving payments off-chain introduces other problems.
 
-**Liquidity matters.** A channel needs enough outbound liquidity in the required direction for a payment to pass through it.
+**Liquidity matters, and it is not the same as capacity.** A channel's capacity is the total amount locked in the funding transaction. The example earlier in this article had a capacity of 2 BTC. But at any given moment, only one side's balance is available to send in a given direction. If Alice's balance drops to 0.1 BTC, she only has 0.1 BTC of outbound liquidity left, even though the channel's capacity has not changed. A payment needs enough liquidity on the sending side, in the direction it needs to move, and capacity alone does not guarantee that.
 
 **Routing matters.** The sender needs to find a path of channels capable of carrying the payment.
 
