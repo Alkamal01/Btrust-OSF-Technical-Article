@@ -49,6 +49,8 @@ For a normal single transaction, the path eventually reaches:
 MemPoolAccept::AcceptSingleTransactionInternal(...)
 ```
 
+You can find this path in Bitcoin Core's [`src/validation.cpp`](https://github.com/bitcoin/bitcoin/blob/master/src/validation.cpp), where transaction acceptance moves through consensus checks, mempool policy checks and fee-related rules before a transaction is admitted.
+
 Before the transaction is added, Bitcoin Core performs a number of checks.
 
 These checks are not all asking the same question.
@@ -115,6 +117,8 @@ and:
 TrimToSize(...)
 ```
 
+Both live in Bitcoin Core's [`src/txmempool.cpp`](https://github.com/bitcoin/bitcoin/blob/master/src/txmempool.cpp), which is where the mempool handles expiration, trimming and fee pressure.
+
 They solve two different problems.
 
 `Expire()` deals with transactions that have been sitting around for too long.
@@ -162,6 +166,8 @@ There are relationships between transactions.
 This is where the transaction graph starts to matter.
 
 Bitcoin Core's `TrimToSize()` keeps removing transactions while the mempool's memory usage is above its configured limit.
+
+The implementation is in [`src/txmempool.cpp`](https://github.com/bitcoin/bitcoin/blob/master/src/txmempool.cpp), close to the code that tracks descendants and updates the rolling minimum fee rate during eviction.
 
 But it doesn't simply remove whichever transaction arrived first.
 
