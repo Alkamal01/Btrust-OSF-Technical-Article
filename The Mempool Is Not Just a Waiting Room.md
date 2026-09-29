@@ -51,17 +51,17 @@ MemPoolAccept::AcceptSingleTransactionInternal(...)
 
 Before the transaction is added, Bitcoin Core performs a number of checks.
 
-The interesting thing is that these checks are not all asking the same question.
+These checks are not all asking the same question.
 
 Some are about whether the transaction follows Bitcoin's consensus rules.
 
 Others are about whether the node wants that transaction in its mempool.
 
-That difference is important.
+That difference matters.
 
 ## Consensus Rules and Mempool Policy Are Not the Same Thing
 
-This was probably the most important thing I learned while looking through the acceptance code.
+This was the main thing I learned while looking through the acceptance code.
 
 Bitcoin Core performs basic transaction checks and rejects things that cannot be valid transactions. For example, a coinbase transaction cannot simply arrive over the network and enter the mempool. Coinbase transactions have a special role inside blocks.
 
@@ -77,7 +77,7 @@ But Bitcoin Core also checks things such as:
 
 Some of these are **policy decisions**, not Bitcoin consensus rules.
 
-That gives us an important distinction:
+That gives us the key distinction:
 
 ```text
 Consensus:
@@ -159,7 +159,7 @@ There are relationships between transactions.
 
 ## What Happens When the Mempool Gets Full?
 
-This gets even more interesting.
+This is where the transaction graph starts to matter.
 
 Bitcoin Core's `TrimToSize()` keeps removing transactions while the mempool's memory usage is above its configured limit.
 
@@ -194,7 +194,7 @@ So when Bitcoin Core manages limited mempool space, transaction relationships ma
 
 ## Getting Evicted Changes the Cost of Getting Back In
 
-There was another detail in `TrimToSize()` that I found interesting.
+Another detail in `TrimToSize()` changed how I thought about mempool pressure.
 
 When Bitcoin Core removes transactions because of memory pressure, it updates a rolling minimum fee rate.
 
@@ -268,7 +268,7 @@ This is why thinking about **a node's mempool** is more accurate than imagining 
 
 Bitcoin's peer-to-peer network handles transaction relay.
 
-One thing I found interesting in Bitcoin Core is that nodes commonly announce transaction inventory to peers rather than blindly pushing every complete transaction to everyone.
+In Bitcoin Core, nodes commonly announce transaction inventory to peers rather than blindly pushing every complete transaction to everyone.
 
 At a simplified level:
 
@@ -308,7 +308,7 @@ Node B does not trust Node A's mempool policy.
 
 It validates the transaction for itself.
 
-That is an important part of Bitcoin's design.
+That is part of Bitcoin's design.
 
 ## Then a Block Arrives
 
@@ -326,7 +326,7 @@ Then a miner produces a block containing Transaction X.
 
 All three nodes can receive that block.
 
-At that point, the important question is no longer:
+At that point, the question is no longer:
 
 > "Would I accept Transaction X into my mempool?"
 
@@ -372,4 +372,13 @@ there is a useful follow-up question:
 
 **Whose mempool?**
 
-*AI Usage Disclosure: I wrote and researched this article myself. I used AI only to check grammar and language, not for research, structure, or content.*
+## References & Further Reading
+
+- [Bitcoin Core source code: `src/validation.cpp`](https://github.com/bitcoin/bitcoin/blob/master/src/validation.cpp) - mempool transaction acceptance and policy checks
+- [Bitcoin Core source code: `src/txmempool.cpp`](https://github.com/bitcoin/bitcoin/blob/master/src/txmempool.cpp) - mempool expiration, eviction and fee management
+- [Bitcoin Core source code: `src/net_processing.cpp`](https://github.com/bitcoin/bitcoin/blob/master/src/net_processing.cpp) - transaction relay and peer-to-peer inventory handling
+- [Bitcoin Core developer documentation](https://github.com/bitcoin/bitcoin/tree/master/doc)
+- [Bitcoin Developer Guide: Transactions](https://developer.bitcoin.org/devguide/transactions.html)
+- [Bitcoin Developer Guide: P2P Network](https://developer.bitcoin.org/devguide/p2p_network.html)
+- [BIP 125: Opt-in Full Replace-by-Fee Signaling](https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki)
+- [BIP 339: WTXID-based transaction relay](https://github.com/bitcoin/bips/blob/master/bip-0339.mediawiki)
