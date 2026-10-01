@@ -37,7 +37,7 @@ Node A              Node B              Node C
 
 These mempools can overlap heavily, but they do not have to contain exactly the same transactions.
 
-To understand why, we first need to look at what happens when a transaction reaches a Bitcoin Core node.
+To understand why, we first need to look at what happens when a transaction reaches a Bitcoin node.
 
 ## A Transaction Doesn't Just Walk Into the Mempool
 
@@ -192,7 +192,7 @@ But the child cannot be mined without the parent.
 
 The fees therefore need to be understood in the context of their relationship.
 
-This connects to **Child Pays for Parent**, or CPFP.
+This connects to [**Child Pays for Parent**](https://bitcoinops.org/en/topics/cpfp/), or CPFP.
 
 A child transaction can pay a sufficiently high fee that including the parent and child together becomes attractive.
 
@@ -386,5 +386,6 @@ there is a useful follow-up question:
 - [Bitcoin Core developer documentation](https://github.com/bitcoin/bitcoin/tree/master/doc)
 - [Bitcoin Developer Guide: Transactions](https://developer.bitcoin.org/devguide/transactions.html)
 - [Bitcoin Developer Guide: P2P Network](https://developer.bitcoin.org/devguide/p2p_network.html)
+- [Bitcoin Optech: Child Pays for Parent](https://bitcoinops.org/en/topics/cpfp/)
 - [BIP 125: Opt-in Full Replace-by-Fee Signaling](https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki)
 - [BIP 339: WTXID-based transaction relay](https://github.com/bitcoin/bips/blob/master/bip-0339.mediawiki)
