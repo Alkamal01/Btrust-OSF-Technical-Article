@@ -145,7 +145,7 @@ Transaction B
 Transaction C
 ```
 
-B spends an output created by A, and C spends an output created by B.
+Here, A is the parent transaction. B is a child transaction because it spends an output created by A. C is a child of B, and a descendant of A, because it spends an output created by B.
 
 Bitcoin Core understands these relationships.
 
@@ -153,7 +153,9 @@ When an old transaction is expired, Bitcoin Core calculates its descendants as p
 
 That makes sense.
 
-If A disappears from the mempool, B and C depend on a transaction that is no longer there.
+If A is removed from a node's mempool, B and C cannot remain there as ordinary independent transactions. They rely on A's output existing first, so keeping them without A would leave the node with transactions whose required parent is missing.
+
+This does not mean A has stopped existing everywhere. Another node may still have it, a wallet may rebroadcast it, or it may later be mined in a block. It only means that this particular node is no longer keeping A in its local mempool.
 
 This was one of the points where the "waiting room" analogy really started breaking down for me.
 
