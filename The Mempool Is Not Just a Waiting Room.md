@@ -18,21 +18,17 @@ The first thing I realized is that it is better to stop thinking about **the mem
 
 Every Bitcoin node maintains its own mempool.
 
-So instead of imagining this:
+So instead of imagining one shared mempool, a better picture is:
 
-```text
-                 Bitcoin Mempool
-                /       |       \
-             Node A   Node B   Node C
-```
+```mermaid
+flowchart LR
+    A["Node A<br/>local mempool"]
+    B["Node B<br/>local mempool"]
+    C["Node C<br/>local mempool"]
 
-a better picture is:
-
-```text
-Node A              Node B              Node C
-┌─────────┐         ┌─────────┐         ┌─────────┐
-│ Mempool │         │ Mempool │         │ Mempool │
-└─────────┘         └─────────┘         └─────────┘
+    A -. "some overlap" .- B
+    B -. "some overlap" .- C
+    A -. "not identical" .- C
 ```
 
 These mempools can overlap heavily, but they do not have to contain exactly the same transactions.
@@ -65,9 +61,15 @@ That difference matters.
 
 This was the main thing I learned while looking through the acceptance code.
 
-Bitcoin Core performs basic transaction checks and rejects things that cannot be valid transactions. For example, a coinbase transaction cannot simply arrive over the network and enter the mempool. Coinbase transactions have a special role inside blocks.
+Consensus rules are the rules every Bitcoin node must agree on when deciding whether a block is valid. If a block breaks consensus rules, nodes reject it. These rules cover things like valid signatures, no double-spending inside the chain, the block subsidy, and the requirement that a transaction only spends outputs that exist.
 
-But Bitcoin Core also checks things such as:
+Mempool policy is different. It is the local set of rules a node uses when deciding whether to keep and relay an unconfirmed transaction before it appears in a block. Policy is about resource management, relay behavior and denial-of-service protection.
+
+In practice, Bitcoin Core's acceptance path interleaves different checks rather than running one perfectly separate "consensus phase" and then one perfectly separate "policy phase." But the principle is simple: a node must not keep and relay a transaction it knows cannot be valid, and even after that, the node can still reject the transaction from its mempool for policy reasons.
+
+For example, Bitcoin Core rejects things that cannot be valid transactions. A coinbase transaction cannot simply arrive over the network and enter the mempool because coinbase transactions have a special role inside blocks.
+
+Bitcoin Core also checks policy-related things such as:
 
 - whether the transaction is standard;
 - whether it is final enough to be mined in the next block;
@@ -77,16 +79,14 @@ But Bitcoin Core also checks things such as:
 - whether its scripts and witnesses satisfy relevant checks;
 - and whether it violates other mempool limits.
 
-Some of these are **policy decisions**, not Bitcoin consensus rules.
-
-That gives us the key distinction:
+So the distinction is:
 
 ```text
 Consensus:
 "Could this transaction be valid under Bitcoin's rules?"
 
 Mempool policy:
-"Am I willing to keep and relay this transaction?"
+"Am I willing to keep and relay this transaction right now?"
 ```
 
 Those questions are related, but they are not identical.
@@ -135,14 +135,14 @@ Transactions in the mempool are not always independent.
 
 Imagine:
 
-```text
-Transaction A
-     │
-     ▼
-Transaction B
-     │
-     ▼
-Transaction C
+```mermaid
+flowchart TB
+    A["Transaction A<br/>parent"]
+    B["Transaction B<br/>child of A"]
+    C["Transaction C<br/>child of B<br/>descendant of A"]
+
+    A -->|"B spends A's output"| B
+    B -->|"C spends B's output"| C
 ```
 
 Here, A is the parent transaction. B is a child transaction because it spends an output created by A. C is a child of B, and a descendant of A, because it spends an output created by B.
@@ -179,13 +179,15 @@ That transaction graph matters because one transaction can depend on another.
 
 Consider this:
 
-```text
-Parent
-Low fee
-   │
-   ▼
-Child
-High fee
+```mermaid
+flowchart TB
+    P["Parent transaction<br/>low fee"]
+    CH["Child transaction<br/>high fee"]
+    PKG["Parent + child considered together<br/>more attractive package"]
+
+    P -->|"child spends parent output"| CH
+    P -. "package fee rate" .-> PKG
+    CH -. "package fee rate" .-> PKG
 ```
 
 Looking only at the parent might make it seem like an obvious transaction to remove.
@@ -280,26 +282,20 @@ In Bitcoin Core, nodes commonly announce transaction inventory to peers rather t
 
 At a simplified level:
 
-```text
-Node A
-  │
-  │ announces transaction
-  ▼
-Node B
-  │
-  │ requests data it needs
-  ▼
-receives transaction
-  │
-  ▼
-runs its own checks
-  │
-  ├── Reject
-  │
-  └── Accept
-         │
-         ▼
-   Node B's mempool
+```mermaid
+flowchart TB
+    A["Node A"]
+    B["Node B"]
+    TX["Transaction data"]
+    CHECK["Node B runs its own checks"]
+    REJECT["Reject"]
+    ACCEPT["Accept into Node B's mempool"]
+
+    A -->|"announces transaction inventory"| B
+    B -->|"requests data it needs"| TX
+    TX --> CHECK
+    CHECK --> REJECT
+    CHECK --> ACCEPT
 ```
 
 Bitcoin Core can announce transaction inventory using a transaction's `txid`, or its `wtxid` when the peer supports wtxid relay.
