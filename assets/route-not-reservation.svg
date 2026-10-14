@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">A Lightning route is not a reservation</title>
+  <desc id="desc">A route is calculated from public channel information, but private liquidity can change before the payment arrives.</desc>
+  <defs><style>.title{font:700 30px Arial;fill:#0f172a}.label{font:700 22px Arial;fill:#172033}.small{font:18px Arial;fill:#475569}.bad{font:700 20px Arial;fill:#b91c1c}</style></defs>
+  <rect width="1200" height="520" rx="24" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">A route is a prediction, not a locked reservation</text>
+  <circle cx="120" cy="190" r="38" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><circle cx="380" cy="190" r="38" fill="#e0e7ff" stroke="#4f46e5" stroke-width="3"/><circle cx="640" cy="190" r="38" fill="#e0e7ff" stroke="#4f46e5" stroke-width="3"/><circle cx="900" cy="190" r="38" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
+  <text x="120" y="198" text-anchor="middle" class="label">A</text><text x="380" y="198" text-anchor="middle" class="label">C</text><text x="640" y="198" text-anchor="middle" class="label">D</text><text x="900" y="198" text-anchor="middle" class="label">B</text>
+  <line x1="160" y1="190" x2="340" y2="190" stroke="#2563eb" stroke-width="5"/><line x1="420" y1="190" x2="600" y2="190" stroke="#2563eb" stroke-width="5"/><line x1="680" y1="190" x2="860" y2="190" stroke="#2563eb" stroke-width="5"/>
+  <text x="600" y="270" text-anchor="middle" class="small">Public graph: channels, fees, CLTV deltas</text>
+  <rect x="180" y="340" width="840" height="90" rx="16" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="600" y="378" text-anchor="middle" class="bad">Liquidity changes before the HTLC arrives</text><text x="600" y="408" text-anchor="middle" class="small">The route can be valid on paper and fail in the live channel state.</text>
+</svg>
