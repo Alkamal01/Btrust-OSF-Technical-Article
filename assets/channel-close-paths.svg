@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Cooperative and force close paths</title>
+  <desc id="desc">A cooperative close uses one jointly signed transaction. A force close broadcasts a commitment transaction with delayed and HTLC outputs.</desc>
+  <defs><style>.title{font:700 30px Arial;fill:#0f172a}.label{font:700 22px Arial;fill:#172033}.small{font:18px Arial;fill:#475569}</style></defs>
+  <rect width="1200" height="560" rx="24" fill="#f8fafc"/><text x="60" y="58" class="title">Two ways for a Lightning channel to close</text>
+  <rect x="70" y="120" width="500" height="330" rx="20" fill="#ecfdf5" stroke="#059669" stroke-width="3"/><text x="320" y="165" text-anchor="middle" class="label">Cooperative close</text><text x="320" y="215" text-anchor="middle" class="small">Alice + Bob agree on latest state</text><text x="320" y="275" text-anchor="middle" class="small">both sign one transaction</text><text x="320" y="335" text-anchor="middle" class="small">Bitcoin confirms it</text><text x="320" y="395" text-anchor="middle" class="small">final balances become spendable</text>
+  <rect x="630" y="120" width="500" height="330" rx="20" fill="#fff7ed" stroke="#d97706" stroke-width="3"/><text x="880" y="165" text-anchor="middle" class="label">Force close</text><text x="880" y="215" text-anchor="middle" class="small">one side broadcasts commitment</text><text x="880" y="275" text-anchor="middle" class="small">outputs may be delayed</text><text x="880" y="335" text-anchor="middle" class="small">HTLCs use success/timeout paths</text><text x="880" y="395" text-anchor="middle" class="small">monitoring protects against old states</text>
+</svg>
