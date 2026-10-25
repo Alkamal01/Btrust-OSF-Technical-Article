@@ -29,6 +29,8 @@ Alice ─────── Carol ─────── Dave ──────�
 
 Alice doesn't need to open a new channel with Bob. Instead, Carol and Dave forward the payment through their existing channels.
 
+![HTLC payment setup and settlement](assets/htlc-flow.svg)
+
 But this introduces a problem. Why should Carol forward money to Dave if she can't be certain she'll receive the money from Alice? And why should Dave do the same for Bob?
 
 Lightning needs a way to ensure that forwarding nodes can settle these payments without having to trust one another.
@@ -95,6 +97,8 @@ Carol knows that she received a payment from Alice and must forward it to Dave. 
 
 Likewise, Dave knows his immediate neighbors, but he doesn't automatically know the entire path the payment followed.
 
+![Onion routing reveals only the next hop](assets/onion-routing.svg)
+
 This is a meaningful privacy guarantee. A forwarding node doesn't receive a complete map of every payment it processes.
 
 Still, onion routing protects the routing instructions, not every piece of information associated with the HTLC.
@@ -158,6 +162,8 @@ Because traditional HTLC forwarding reuses the same hash, this provides strong e
 This is evidence of correlation, not mathematical proof. Another payment could have similar timing or metadata, especially in a busy network. The confidence of the inference depends on the observers' positions, the quality of their records, and what other information they can combine with the hash.
 
 This is an example of **payment correlation**.
+
+![Payment correlation through a shared payment hash](assets/payment-correlation.svg)
 
 Think of a delivery company moving a package through several warehouses. Each warehouse only knows where it received the package and where to send it next. The complete delivery route might be hidden from individual workers.
 

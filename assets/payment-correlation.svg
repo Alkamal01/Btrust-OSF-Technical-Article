@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Payment correlation through a shared payment hash</title>
+  <desc id="desc">Node A and Node C are controlled by cooperating observers. Both see the same payment hash and compare timing and metadata to correlate the observations.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .label { font: 600 24px Arial, sans-serif; fill: #172033; }
+      .small { font: 18px Arial, sans-serif; fill: #475569; }
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .hash { font: 600 20px monospace; fill: #9f1239; }
+    </style>
+  </defs>
+  <rect width="1200" height="560" rx="24" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">The same hash creates a correlation surface</text>
+
+  <line x1="120" y1="190" x2="1080" y2="190" stroke="#cbd5e1" stroke-width="5"/>
+  <circle cx="170" cy="190" r="38" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <circle cx="400" cy="190" r="38" fill="#fee2e2" stroke="#e11d48" stroke-width="4"/>
+  <circle cx="650" cy="190" r="38" fill="#e0e7ff" stroke="#4f46e5" stroke-width="3"/>
+  <circle cx="900" cy="190" r="38" fill="#fee2e2" stroke="#e11d48" stroke-width="4"/>
+  <circle cx="1050" cy="190" r="38" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
+  <text x="170" y="198" text-anchor="middle" class="small">Sender</text>
+  <text x="400" y="198" text-anchor="middle" class="label">A</text>
+  <text x="650" y="198" text-anchor="middle" class="label">B</text>
+  <text x="900" y="198" text-anchor="middle" class="label">C</text>
+  <text x="1050" y="198" text-anchor="middle" class="small">Bob</text>
+  <text x="400" y="260" text-anchor="middle" class="small">observes</text>
+  <text x="900" y="260" text-anchor="middle" class="small">observes</text>
+
+  <rect x="250" y="330" width="300" height="100" rx="16" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+  <text x="400" y="370" text-anchor="middle" class="hash">H = 8f2a...</text>
+  <text x="400" y="402" text-anchor="middle" class="small">time, amount, timelock</text>
+  <rect x="650" y="330" width="300" height="100" rx="16" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+  <text x="800" y="370" text-anchor="middle" class="hash">H = 8f2a...</text>
+  <text x="800" y="402" text-anchor="middle" class="small">time, amount, timelock</text>
+
+  <line x1="550" y1="380" x2="650" y2="380" stroke="#e11d48" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+  <text x="600" y="350" text-anchor="middle" class="small">compare</text>
+  <text x="600" y="500" text-anchor="middle" class="small">Correlation is evidence, not proof; metadata can strengthen or weaken the inference.</text>
+</svg>

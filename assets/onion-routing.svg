@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Onion routing reveals only the next hop</title>
+  <desc id="desc">Alice creates layered encrypted routing instructions. Carol removes one layer and sees Dave, while Dave removes another layer and sees Bob.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .label { font: 600 24px Arial, sans-serif; fill: #172033; }
+      .small { font: 18px Arial, sans-serif; fill: #475569; }
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+    </style>
+  </defs>
+  <rect width="1200" height="560" rx="24" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">Each node removes one routing layer</text>
+
+  <circle cx="120" cy="290" r="44" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <circle cx="1060" cy="290" r="44" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
+  <text x="120" y="298" text-anchor="middle" class="label">Alice</text>
+  <text x="1060" y="298" text-anchor="middle" class="label">Bob</text>
+
+  <line x1="168" y1="290" x2="300" y2="290" stroke="#64748b" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="468" y1="290" x2="600" y2="290" stroke="#64748b" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="768" y1="290" x2="1010" y2="290" stroke="#64748b" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <circle cx="380" cy="290" r="78" fill="#fef3c7" stroke="#d97706" stroke-width="4"/>
+  <circle cx="380" cy="290" r="54" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+  <circle cx="380" cy="290" r="30" fill="#fbbf24" stroke="#d97706" stroke-width="3"/>
+  <text x="380" y="410" text-anchor="middle" class="label">Carol</text>
+  <text x="380" y="440" text-anchor="middle" class="small">sees: forward to Dave</text>
+
+  <circle cx="680" cy="290" r="78" fill="#fef3c7" stroke="#d97706" stroke-width="4"/>
+  <circle cx="680" cy="290" r="54" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+  <circle cx="680" cy="290" r="30" fill="#fbbf24" stroke="#d97706" stroke-width="3"/>
+  <text x="680" y="410" text-anchor="middle" class="label">Dave</text>
+  <text x="680" y="440" text-anchor="middle" class="small">sees: forward to Bob</text>
+
+  <text x="600" y="120" text-anchor="middle" class="small">Alice sends an encrypted onion packet</text>
+  <text x="600" y="505" text-anchor="middle" class="small">No forwarding node receives the complete route</text>
+</svg>
