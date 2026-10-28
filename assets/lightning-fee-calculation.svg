@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Lightning fees accumulate backwards from the receiver</title>
+  <desc id="desc">The receiver amount is calculated first, and each upstream hop adds its fee to determine the amount the sender must provide.</desc>
+  <defs><style>.title{font:700 30px Arial;fill:#0f172a}.label{font:700 21px Arial;fill:#172033}.value{font:600 21px monospace;fill:#0f766e}.small{font:18px Arial;fill:#475569}</style></defs>
+  <rect width="1200" height="520" rx="24" fill="#f8fafc"/><text x="60" y="58" class="title">Fee calculation walks backwards</text>
+  <rect x="80" y="150" width="220" height="150" rx="18" fill="#dcfce7" stroke="#059669" stroke-width="3"/><text x="190" y="195" text-anchor="middle" class="label">Bob receives</text><text x="190" y="245" text-anchor="middle" class="value">100,000 msat</text>
+  <rect x="490" y="150" width="220" height="150" rx="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/><text x="600" y="195" text-anchor="middle" class="label">Dave receives</text><text x="600" y="245" text-anchor="middle" class="value">100,150 msat</text>
+  <rect x="900" y="150" width="220" height="150" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><text x="1010" y="195" text-anchor="middle" class="label">Alice sends</text><text x="1010" y="245" text-anchor="middle" class="value">100,400 msat</text>
+  <line x1="310" y1="225" x2="480" y2="225" stroke="#64748b" stroke-width="4"/><line x1="720" y1="225" x2="890" y2="225" stroke="#64748b" stroke-width="4"/>
+  <text x="395" y="190" text-anchor="middle" class="small">+150 fee</text><text x="805" y="190" text-anchor="middle" class="small">+250 fee</text><text x="600" y="390" text-anchor="middle" class="small">Every hop checks that the incoming amount covers its outgoing amount plus its fee.</text>
+</svg>
