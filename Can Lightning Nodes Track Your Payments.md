@@ -53,6 +53,8 @@ H = SHA256(R)
 
 Alice doesn't know `R`, but she knows `H`. She can create a conditional payment that effectively says: whoever provides the secret corresponding to `H` can claim the funds before the deadline.
 
+If the preimage is not revealed before the deadline, the success path is no longer available. The sender can then recover the funds through the HTLC's timeout path, subject to the relevant [CLTV timelock rules](https://docs.lightning.engineering/the-lightning-network/multihop-payments/timelocks). In a multi-hop payment, the expiry is staggered between hops so that forwarding nodes have time to claim or recover their corresponding HTLCs safely.
+
 Carol and Dave create corresponding conditional payments along the route.
 
 When Bob receives the payment, he reveals the preimage. Dave can use it to settle his incoming HTLC with Carol, and Carol can use it to settle hers with Alice.
@@ -91,7 +93,9 @@ Neither receives the complete set of instructions.
 
 Lightning follows a similar idea, except the envelopes are layers of encrypted routing information.
 
-When Alice constructs a payment, she prepares an onion packet containing instructions for the nodes along the route. Each node processes its own layer and forwards the remaining packet to the next hop.
+Before Alice can construct the packet, her Lightning node selects a complete route to Bob using the network information available to it. In practice, the route may be built from the node's channel graph, fees, timelocks, and available liquidity. Alice's node then creates the onion packet with a separate encrypted instruction layer for each hop along that route.
+
+The forwarding nodes do not discover the route one hop at a time. Instead, each node processes only the layer intended for it and forwards the remaining packet to the next hop. Knowing the full route is therefore necessary for the sender to construct the packet, but that route is not revealed to any single forwarding node.
 
 Carol knows that she received a payment from Alice and must forward it to Dave. But she isn't directly told whether Dave is the final recipient or another forwarding node.
 
@@ -195,7 +199,7 @@ This is one of the motivations behind Point Time-Locked Contracts, commonly call
 
 ## How PTLCs could improve payment privacy
 
-PTLCs use point-based cryptographic conditions rather than the identical hash conditions used in traditional HTLC forwarding. They remain a proposed or limited-deployment improvement rather than a universally deployed replacement for HTLCs across the Lightning Network.
+[PTLCs](https://docs.lightning.engineering/community-resources/glossary#ptlc) use [point-based cryptographic conditions](https://docs.lightning.engineering/community-resources/glossary#ptlc) rather than the identical hash conditions used in traditional HTLC forwarding. They remain a proposed or limited-deployment improvement rather than a universally deployed replacement for HTLCs across the Lightning Network.
 
 The underlying idea is that the conditions can be transformed between hops while preserving the relationship needed to complete the payment.
 
