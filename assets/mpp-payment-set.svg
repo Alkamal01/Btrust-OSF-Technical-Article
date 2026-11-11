@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Multi-part Lightning payment set</title>
+  <desc id="desc">A sender splits one payment into two HTLCs that travel along separate paths and are reassembled by the receiver before settlement.</desc>
+  <defs><style>.title{font:700 30px Arial;fill:#0f172a}.label{font:700 22px Arial;fill:#172033}.small{font:18px Arial;fill:#475569}.value{font:600 20px monospace;fill:#0f766e}</style></defs>
+  <rect width="1200" height="560" rx="24" fill="#f8fafc"/><text x="60" y="58" class="title">Separate paths, one payment condition</text>
+  <circle cx="120" cy="280" r="42" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><text x="120" y="288" text-anchor="middle" class="label">Alice</text>
+  <circle cx="1040" cy="280" r="42" fill="#dcfce7" stroke="#059669" stroke-width="3"/><text x="1040" y="288" text-anchor="middle" class="label">Bob</text>
+  <path d="M165 260 C350 100, 500 100, 995 260" fill="none" stroke="#2563eb" stroke-width="7"/><path d="M165 300 C350 460, 500 460, 995 300" fill="none" stroke="#7c3aed" stroke-width="7"/>
+  <text x="580" y="145" text-anchor="middle" class="value">40,000 msat</text><text x="580" y="445" text-anchor="middle" class="value">60,000 msat</text><text x="600" y="520" text-anchor="middle" class="small">Bob waits until compatible parts total 100,000 msat before revealing the preimage.</text>
+</svg>
