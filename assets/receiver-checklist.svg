@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Validate a trampoline payment before settling it</title>
+  <desc id="desc">A receiver parses the onion, validates identity and amounts, groups compatible HTLCs, and only then reveals the preimage.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 700 19px Arial, sans-serif; fill: #172033; }
+      .small { font: 16px Arial, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect width="1200" height="620" rx="24" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">Validate first. Settle second.</text>
+
+  <g transform="translate(60,145)">
+    <rect width="190" height="180" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+    <circle cx="95" cy="52" r="27" fill="#bfdbfe"/>
+    <text x="95" y="59" text-anchor="middle" class="label">1</text>
+    <text x="95" y="105" text-anchor="middle" class="label">Parse</text>
+    <text x="95" y="132" text-anchor="middle" class="small">outer + inner</text>
+    <text x="95" y="154" text-anchor="middle" class="small">onions</text>
+  </g>
+  <g transform="translate(300,145)">
+    <rect width="190" height="180" rx="18" fill="#fefce8" stroke="#ca8a04" stroke-width="3"/>
+    <circle cx="95" cy="52" r="27" fill="#fde68a"/>
+    <text x="95" y="59" text-anchor="middle" class="label">2</text>
+    <text x="95" y="105" text-anchor="middle" class="label">Compare</text>
+    <text x="95" y="132" text-anchor="middle" class="small">hash, secret,</text>
+    <text x="95" y="154" text-anchor="middle" class="small">amounts, CLTV</text>
+  </g>
+  <g transform="translate(540,145)">
+    <rect width="190" height="180" rx="18" fill="#fdf2f8" stroke="#db2777" stroke-width="3"/>
+    <circle cx="95" cy="52" r="27" fill="#fbcfe8"/>
+    <text x="95" y="59" text-anchor="middle" class="label">3</text>
+    <text x="95" y="105" text-anchor="middle" class="label">Group</text>
+    <text x="95" y="132" text-anchor="middle" class="small">compatible</text>
+    <text x="95" y="154" text-anchor="middle" class="small">HTLC parts</text>
+  </g>
+  <g transform="translate(780,145)">
+    <rect width="190" height="180" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+    <circle cx="95" cy="52" r="27" fill="#bbf7d0"/>
+    <text x="95" y="59" text-anchor="middle" class="label">4</text>
+    <text x="95" y="105" text-anchor="middle" class="label">Settle</text>
+    <text x="95" y="132" text-anchor="middle" class="small">reveal the</text>
+    <text x="95" y="154" text-anchor="middle" class="small">preimage</text>
+  </g>
+  <line x1="250" y1="235" x2="290" y2="235" stroke="#64748b" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="490" y1="235" x2="530" y2="235" stroke="#64748b" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="730" y1="235" x2="770" y2="235" stroke="#64748b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="600" y="445" text-anchor="middle" class="label">If validation fails, fail the payment instead.</text>
+  <text x="600" y="480" text-anchor="middle" class="small">A revealed preimage cannot be taken back.</text>
+</svg>

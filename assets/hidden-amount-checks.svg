@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Comparing the outer and inner amounts in a trampoline payment</title>
+  <desc id="desc">The receiver compares outer total, inner forwarding amount, invoice amount, and CLTV relationships before settling.</desc>
+  <defs>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 700 22px Arial, sans-serif; fill: #172033; }
+      .value { font: 600 24px monospace; fill: #0f766e; }
+      .small { font: 18px Arial, sans-serif; fill: #475569; }
+      .check { font: 700 20px Arial, sans-serif; fill: #166534; }
+    </style>
+  </defs>
+  <rect width="1200" height="650" rx="24" fill="#f8fafc"/>
+  <text x="60" y="58" class="title">The receiver checks relationships, not one number</text>
+
+  <rect x="70" y="110" width="480" height="120" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  <text x="100" y="150" class="label">Outer payment</text>
+  <text x="100" y="190" class="value">total_msat = 105,000</text>
+  <text x="100" y="218" class="small">amount includes the outer route's fee budget</text>
+
+  <rect x="650" y="110" width="480" height="120" rx="18" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+  <text x="680" y="150" class="label">Inner payment</text>
+  <text x="680" y="190" class="value">amt_to_forward = 100,000</text>
+  <text x="680" y="218" class="small">amount intended for the final leg</text>
+
+  <rect x="70" y="290" width="480" height="120" rx="18" fill="#fefce8" stroke="#ca8a04" stroke-width="3"/>
+  <text x="100" y="330" class="label">Invoice</text>
+  <text x="100" y="370" class="value">requested = 100,000</text>
+  <text x="100" y="398" class="small">the receiver's expected final amount</text>
+
+  <rect x="650" y="290" width="480" height="120" rx="18" fill="#fdf2f8" stroke="#db2777" stroke-width="3"/>
+  <text x="680" y="330" class="label">Timelocks</text>
+  <text x="680" y="370" class="value">outer_cltv ≥ inner_cltv</text>
+  <text x="680" y="398" class="small">the outer layer must leave enough time</text>
+
+  <rect x="210" y="490" width="780" height="88" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="600" y="530" text-anchor="middle" class="check">✓ Compare all layers before revealing the preimage</text>
+  <text x="600" y="558" text-anchor="middle" class="small">Invoice checks alone do not establish a valid trampoline payment.</text>
+</svg>
